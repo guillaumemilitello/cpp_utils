@@ -19,9 +19,9 @@ struct A
         std::cout << out << "\n";
     }
 
-    static std::unique_ptr<BuilderA> build(std::string&& rootName)
+    static std::unique_ptr<BuilderA> build(std::string&& rootName_)
     {
-        return std::make_unique<BuilderA>(std::forward<std::string>(rootName));
+        return std::make_unique<BuilderA>(std::forward<std::string>(rootName_));
     }
 
 private:
@@ -32,7 +32,7 @@ private:
 
 struct BuilderA
 {
-    BuilderA(const std::string& rootName) : _rootName(rootName) {}
+    BuilderA(const std::string& rootName_) : _rootName(rootName_) {}
 
     BuilderA* build1()
     {
