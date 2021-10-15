@@ -1,4 +1,6 @@
-#include <new> // std::nothrow
+#pragma once
+
+include <new> // std::nothrow
 
 template<typename T>
 class shared_ptr

@@ -1,5 +1,4 @@
-#ifndef THREAD_SAFE_QUEUE_H
-#define THREAD_SAFE_QUEUE_H
+#pragma once
 
 #include <mutex>
 #include <queue>
@@ -75,5 +74,3 @@ public:
   }
 
 };
-
-#endif

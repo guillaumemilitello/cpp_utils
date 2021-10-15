@@ -1,5 +1,4 @@
-#ifndef THREADPOOL_H
-#define THREADPOOL_H
+#pragma once
 
 #include <functional>
 #include <vector>
@@ -79,5 +78,3 @@ public:
         _taskQueue.push([&](){ f_(std::forward<Args>(args_)...); });
     }
 };
-
-#endif

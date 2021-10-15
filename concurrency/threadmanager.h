@@ -1,5 +1,4 @@
-#ifndef THREADMANAGER_H
-#define THREADMANAGER_H
+#pragma once
 
 #include <functional>
 #include <thread>
@@ -34,5 +33,3 @@ public:
         f_(std::forward<Args>(args_)...);
     }
 };
-
-#endif

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <new> // std::nothrow
 
 template <typename T>
