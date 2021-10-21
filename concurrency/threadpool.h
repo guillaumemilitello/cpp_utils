@@ -4,7 +4,6 @@
 #include <vector>
 #include <thread>
 #include <atomic>
-#include <mutex>
 
 #include "threadsafe_queue.h"
 
