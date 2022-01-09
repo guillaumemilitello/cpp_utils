@@ -3,7 +3,7 @@
 #include <atomic>
 #include <condition_variable>
 
-class Mutex
+class Mutex // spinlock
 {
     std::atomic_flag _flag;
 
