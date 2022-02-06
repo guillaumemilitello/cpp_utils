@@ -7,10 +7,19 @@ struct pair_hash
     }
 };
 
-namespace
+
+struct tuple_hash
 {
+    template<typename... Args>
+    std::size_t operator() (const std::tuple<Args...>& tuple) const
+    {
+        size_t seed = 0;
+        HashValueImpl<std::tuple<Args...>>::apply(seed, tuple);
+        return seed;
+    }
+private:
     template <class T>
-    inline void hash_combine(std::size_t& seed, const T& value)
+    static void hash_combine(std::size_t& seed, const T& value)
     {
         // Code from boost
         // Reciprocal of the golden ratio helps spread entropy and handles duplicates.
@@ -37,15 +46,5 @@ namespace
             hash_combine(seed, std::get<0>(tuple));
         }
     };
-}
-
-struct tuple_hash
-{
-    template<typename... Args>
-    std::size_t operator() (const std::tuple<Args...>& tuple) const
-    {
-        size_t seed = 0;
-        HashValueImpl<std::tuple<Args...>>::apply(seed, tuple);
-        return seed;
-    }
 };
+
