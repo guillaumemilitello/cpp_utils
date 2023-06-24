@@ -3,14 +3,14 @@
 template<typename T>
 bool linearSearch(const std::vector<T>& arr_, const T& v_)
 {
-    for (int i = 0; i < arr.size(); i++)
+    for (unsigned i = 0; i < arr_.size(); i++)
     {
-        if (arr[i].equals(v))
+        if (arr_[i] == v_)
         {
             return true;
         }
         // for sequential search if the array is sorted, we can quit earlier
-	    if (arr[i] > v_)
+	    if (arr_[i] > v_)
         {
             return false;
         }
