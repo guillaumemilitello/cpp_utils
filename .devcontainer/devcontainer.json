@@ -6,7 +6,9 @@
 	"image": "mcr.microsoft.com/devcontainers/cpp",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+	"features": {
+		"ghcr.io/balazs23/devcontainers-features/bazel":1
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
@@ -21,7 +23,8 @@
 				"eamodio.gitlens",
 				"shardulm94.trailing-spaces",
 				"streetsidesoftware.code-spell-checker",
-				"oderwat.indent-rainbow"
+				"oderwat.indent-rainbow",
+				"bazelbuild.vscode-bazel"
 			],
 			"settings": {
 				"editor.fontFamily": "'JetBrains Mono', Consolas, 'Courier New', monospace",
@@ -38,7 +41,15 @@
 					"cpp",
 					"python",
 					"bash"
-				]
+				],
+				"gitlens.codeLens.enabled": false,
+				"workbench.localHistory.exclude": {
+					"bazel-*": true
+				},
+				"workbench.search.exclude": {
+					"bazel-*": true
+				},
+				"workbench.search.useIgnoreFiles": false
 			}
 		}
 	}

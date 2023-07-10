@@ -4,17 +4,10 @@
 		{
 			"type": "shell",
 			"label": "build active file",
-			"command": "/usr/bin/clang++",
+			"command": "bazel",
 			"args": [
-				"-fdiagnostics-color=always",
-				"-Wall",
-				"-std=c++17",
-				"-g",
-				"${file}",
-				"-o",
-				"${fileDirname}/${fileBasenameNoExtension}",
-				"-I${workspaceFolder}/utility",
-				"-I${fileDirname}"
+				"build",
+				"//main:algorithms"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
