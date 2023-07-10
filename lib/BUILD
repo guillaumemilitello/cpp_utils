@@ -4,7 +4,7 @@ load("//rules:variables.bzl", "COPTS")
 
 cc_library(
     name = "algorithms",
-    hdrs = ["algorithms/searching.hpp"],
+    hdrs = glob(["algorithms/*.hpp"]),
     includes = ["include"],
     strip_include_prefix = "algorithms",
     visibility = ["//main:__pkg__"],
@@ -13,7 +13,7 @@ cc_library(
 
 cc_library(
     name = "utility",
-    hdrs = ["utility/stream.hpp"],
+    hdrs = glob(["utility/*.hpp"]),
     includes = ["include"],
     strip_include_prefix = "utility",
     visibility = ["//main:__pkg__"],
