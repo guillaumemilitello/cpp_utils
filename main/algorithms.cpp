@@ -1,7 +1,6 @@
 #include <iostream>
-#include <stream.h>
-#include <searching/binary.h>
-#include <searching/linear.h>
+#include <stream.hpp>
+#include <searching.hpp>
 
 int main(int argc, char *argv[])
 {
