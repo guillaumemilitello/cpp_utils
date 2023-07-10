@@ -42,11 +42,11 @@ public:
         {
             _front = e;
         }
-        
+
         _back = e;
     }
 
-    void pop_front() 
+    void pop_front()
     {
         Elem* ef = _front;
         _front = ef->prev;
@@ -96,7 +96,7 @@ public:
         setToNext(_back);
     }
 
-    void pop_front() 
+    void pop_front()
     {
         setToNext(_front);
     }
@@ -105,7 +105,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const QueueArray<T_, Size_>& q);
 
 private:
-    static size_t setToNext(size_t& i_) { i_ = (i_ + 1) % Size;}
+    static void setToNext(size_t& i_) { i_ = (i_ + 1) % Size;}
 
     std::array<T, Size+1> _array;
     size_t _front = 0;

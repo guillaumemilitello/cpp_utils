@@ -15,3 +15,10 @@ cc_binary(
     srcs = ["concurrency.cpp"],
     copts = COPTS,
 )
+
+cc_binary(
+    name = "data_structures",
+    deps = ["//lib:utility", "//lib:data_structures"],
+    srcs = ["data_structures.cpp"],
+    copts = COPTS,
+)

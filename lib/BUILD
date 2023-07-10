@@ -21,6 +21,15 @@ cc_library(
 )
 
 cc_library(
+    name = "data_structures",
+    hdrs = glob(["data_structures/*.hpp"]),
+    includes = ["include"],
+    strip_include_prefix = "data_structures",
+    visibility = ["//main:__pkg__"],
+    copts = COPTS,
+)
+
+cc_library(
     name = "utility",
     hdrs = glob(["utility/*.hpp"]),
     includes = ["include"],
