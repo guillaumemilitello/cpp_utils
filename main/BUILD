@@ -8,3 +8,10 @@ cc_binary(
     srcs = ["algorithms.cpp"],
     copts = COPTS,
 )
+
+cc_binary(
+    name = "concurrency",
+    deps = ["//lib:utility", "//lib:concurrency"],
+    srcs = ["concurrency.cpp"],
+    copts = COPTS,
+)

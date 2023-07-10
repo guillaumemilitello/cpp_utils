@@ -12,6 +12,15 @@ cc_library(
 )
 
 cc_library(
+    name = "concurrency",
+    hdrs = glob(["concurrency/*.hpp"]),
+    includes = ["include"],
+    strip_include_prefix = "concurrency",
+    visibility = ["//main:__pkg__"],
+    copts = COPTS,
+)
+
+cc_library(
     name = "utility",
     hdrs = glob(["utility/*.hpp"]),
     includes = ["include"],
