@@ -2,7 +2,9 @@
 
 #include <vector>
 
-namespace details
+namespace searching
+{
+    namespace details
 {
     template<typename T>
     bool binarySearch(const std::vector<T>& arr_, const T& v_, size_t low_, size_t high_)
@@ -24,27 +26,28 @@ namespace details
     }
 }
 
-// precondition: arr is sorted (in ascending order)
-template<typename T>
-bool binarySearch(const std::vector<T>& arr_, const T& v_)
-{
-    return details::binarySearch(arr_, v_, 0, arr_.size() - 1);
-}
-
-template<typename T>
-bool linearSearch(const std::vector<T>& arr_, const T& v_)
-{
-    for (unsigned i = 0; i < arr_.size(); i++)
+    // precondition: arr is sorted (in ascending order)
+    template<typename T>
+    bool binarySearch(const std::vector<T>& arr_, const T& v_)
     {
-        if (arr_[i] == v_)
-        {
-            return true;
-        }
-        // for sequential search if the array is sorted, we can quit earlier
-        if (arr_[i] > v_)
-        {
-            return false;
-        }
+        return details::binarySearch(arr_, v_, 0, arr_.size() - 1);
     }
-    return false;
+
+    template<typename T>
+    bool linearSearch(const std::vector<T>& arr_, const T& v_)
+    {
+        for (unsigned i = 0; i < arr_.size(); i++)
+        {
+            if (arr_[i] == v_)
+            {
+                return true;
+            }
+            // for sequential search if the array is sorted, we can quit earlier
+            if (arr_[i] > v_)
+            {
+                return false;
+            }
+        }
+        return false;
+    }
 }
