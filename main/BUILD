@@ -7,7 +7,7 @@ cc_binary(
     deps = [
         "//lib:utility",
         "//lib:algorithms",
-        "@benchmark//:benchmark_main",
+        "@benchmark//:lib"
     ],
     srcs = ["algorithms.cpp"],
     copts = COPTS,

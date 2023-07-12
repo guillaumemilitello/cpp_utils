@@ -13,7 +13,7 @@ FROM mcr.microsoft.com/devcontainers/cpp:latest
 # Install Google Benchmark
 #RUN sudo apt-get update && apt-get install libbenchmark-dev -y
 CMD ["/workspaces/"]
-RUN sudo git clone https://github.com/google/benchmark.git -b v1.8.0 \
+RUN sudo git clone https://github.com/google/benchmark.git -b v1.8.2 \
     && cd benchmark \
     && cmake -E make_directory "build" \
     && cmake -DBENCHMARK_USE_BUNDLED_GTEST=OFF -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -BENCHMARK_ENABLE_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -S . -B "build" \
