@@ -4,7 +4,11 @@ load("//rules:variables.bzl", "COPTS")
 
 cc_binary(
     name = "algorithms",
-    deps = ["//lib:utility", "//lib:algorithms"],
+    deps = [
+        "//lib:utility",
+        "//lib:algorithms",
+        "@benchmark//:benchmark_main",
+    ],
     srcs = ["algorithms.cpp"],
     copts = COPTS,
 )
