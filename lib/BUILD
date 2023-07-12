@@ -30,6 +30,15 @@ cc_library(
 )
 
 cc_library(
+    name = "memory",
+    hdrs = glob(["memory/*.hpp"]),
+    includes = ["include"],
+    strip_include_prefix = "memory",
+    visibility = ["//main:__pkg__"],
+    copts = COPTS,
+)
+
+cc_library(
     name = "utility",
     hdrs = glob(["utility/*.hpp"]),
     includes = ["include"],
