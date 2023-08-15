@@ -26,3 +26,13 @@ cc_binary(
     srcs = ["data_structures.cpp"],
     copts = COPTS,
 )
+
+cc_binary(
+    name = "coroutines",
+    srcs = ["coroutines.cpp"],
+    copts = [
+        "-std=c++20",
+        "-Werror",
+        "-fcoroutines",
+    ]
+)
