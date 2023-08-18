@@ -28,6 +28,13 @@ cc_binary(
 )
 
 cc_binary(
+    name = "memory",
+    srcs = ["memory.cpp"],
+    deps = ["//lib:utility", "//lib:memory"],
+    copts = COPTS,
+)
+
+cc_binary(
     name = "coroutines",
     srcs = ["coroutines.cpp"],
     copts = [

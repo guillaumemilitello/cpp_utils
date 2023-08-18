@@ -1,6 +1,6 @@
 #pragma once
 
-include <new> // std::nothrow
+#include <unique_ptr.hpp>
 
 template<typename T>
 class shared_ptr
@@ -11,74 +11,70 @@ class shared_ptr
 public:
     shared_ptr() : data(nullptr), count(nullptr) {}
 
-    // Explicit constructor
-    explicit shared_ptr(T* data) : data(data), count(new (std::nothrow) int(1)) // use the no throw version of new
+    shared_ptr(T* data) : data(data), count(new int(1)) {}
+
+    shared_ptr(unique_ptr<T>&& unique_ptr) : count(new int(1))
     {
-        // Check if the pointer correctly allocated
-        if (count == nullptr)
-        {
-            // If we failed then delete the pointer
-            // and manually throw the exception
-            delete data;
-            throw std::bad_alloc();
-        }
+        data = unique_ptr.get();
+        unique_ptr.release();
     }
 
     ~shared_ptr()
     {
-        --(*count);
-        if (*count == 0)
-        {
-            delete data;
-        }
+        release();
     }
 
     shared_ptr(const shared_ptr& copy) : data(copy.data), count(copy.count)
     {
-        ++(*count);
+        if (count != nullptr)
+        {
+            ++(*count);
+        }
     }
 
-    // Use the copy and swap idiom
-    // It works perfectly for this situation
-    shared_ptr& operator=(shared_ptr rhs)
+    shared_ptr& operator=(const shared_ptr& copy)
     {
-        rhs.swap(*this);
+        if (this != &copy)
+        {
+            data = copy.data;
+            count = copy.count;
+            if (count != nullptr)
+            {
+                ++(*count);
+            }
+        }
         return *this;
     }
 
-    shared_ptr& operator=(T* newData)
+    shared_ptr& operator=(unique_ptr<T>&& unique_ptr)
     {
-        shared_ptr tmp(newData);
-        tmp.swap(*this);
+        release();
+        data = unique_ptr.get();
+        unique_ptr.release();
+        if (count != nullptr)
+        {
+            count = new int(1);
+        }
+        else
+        {
+            *count = 1;
+        }
         return *this;
     }
 
-    // Constructor/Assignment that allows move semantics
-    shared_ptr(shared_ptr&& moving) noexcept
+    void release() noexcept
     {
-        moving.swap(*this);
-    }
-
-    shared_ptr& operator=(shared_ptr&& moving) noexcept
-    {
-        moving.swap(*this);
-        return *this;
-    }
-
-    // Always good to have a swap function
-    // Make sure it is noexcept
-    void swap(shared_ptr& src) noexcept
-    {
-        std::swap(data,  src.data);
-        std::swap(count, src.count);
-    }
-
-    // Modify object state
-    T* release() noexcept
-    {
-        shared_ptr result;
-        result.swap(*this);
-        return result;
+        if (count != nullptr)
+        {
+            (*count)--;
+            if (*count == 0)
+            {
+                delete data;
+                delete count;
+                data = nullptr;
+                count = nullptr;
+            }
+        }
     }
 
     void reset()
@@ -93,5 +89,6 @@ public:
 
     // Access to smart pointer state
     T* get()                 const { return data; }
+    int use_count()          const { return *count; }
     explicit operator bool() const { return data; }
 };

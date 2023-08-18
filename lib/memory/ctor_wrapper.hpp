@@ -3,7 +3,7 @@
 template<typename T>
 class CtorWrapper
 {
-    T _value = 0;
+    T _value;
 
 public:
     CtorWrapper()
