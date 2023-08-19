@@ -3,6 +3,7 @@
 #include <ctor_wrapper.hpp>
 #include <unique_ptr.hpp>
 #include <shared_ptr.hpp>
+#include <weak_ptr.hpp>
 
 #include <memory>
 
@@ -87,5 +88,67 @@ int main()
         std::cout << "spA1 " << &spA1 << ' ' << *spA1 << ' ' << spA1.get() << ' ' << spA1.use_count() << '\n';
     }
 
+    std::cout << "\nstd::weak_ptr\n";
+    {
+        //shared_ptr<CtorWA> spA0 = new CtorWA(A(6, "six"));
+        std::shared_ptr<CtorWA> spC = std::make_shared<CtorWA>(A(6, "six"));
+        std::cout << "spC  " << &spC << ' ' << *spC << ' ' << spC.get() << ' ' << spC.use_count() << '\n';
+
+        std::weak_ptr<CtorWA> wpA = spC;
+        std::cout << "wpA  " << &wpA << ' ' << wpA.use_count() << '\n';
+
+        spC = std::make_shared<CtorWA>(A(7, "seven")); // A(6, "six") is destroyed
+        std::cout << "spC  " << &spC << ' ' << *spC << ' ' << spC.get() << ' ' << spC.use_count() << '\n';
+
+        std::weak_ptr<CtorWA> wpB = spC;
+        std::cout << "wpB  " << &wpB << ' ' << wpB.use_count() << '\n';
+        std::cout << "wpA  " << &wpA << ' ' << wpA.use_count() << '\n';
+
+        if (auto spwA = wpA.lock())
+        {
+            std::cout << "here\n";
+            std::cout << "spC  " << &spC << ' ' << *spC << ' ' << spC.get() << ' ' << spC.use_count() << '\n';
+            std::cout << "spwA  " << &spwA << ' ' << *spwA << ' ' << spwA.get() << ' ' << spwA.use_count() << '\n';
+        }
+        std::cout << "wpA  " << &wpA << ' ' << wpA.use_count() << '\n';
+
+        if (auto spwB = wpB.lock())
+        {
+            std::cout << "spC  " << &spC << ' ' << *spC << ' ' << spC.get() << ' ' << spC.use_count() << '\n';
+            std::cout << "spwB  " << &spwB << ' ' << *spwB << ' ' << spwB.get() << ' ' << spwB.use_count() << '\n';
+        }
+        std::cout << "wpB  " << &wpB << ' ' << wpB.use_count() << '\n';
+    }
+
+    std::cout << "\nweak_ptr\n";
+    {
+        shared_ptr<CtorWA> spC = new CtorWA(A(6, "six"));
+        std::cout << "spC  " << &spC << ' ' << *spC << ' ' << spC.get() << ' ' << spC.use_count() << '\n';
+
+        weak_ptr<CtorWA> wpA = spC;
+        std::cout << "wpA  " << &wpA << ' ' << wpA.use_count() << '\n';
+
+        spC = new CtorWA(A(7, "seven")); // A(6, "six") is destroyed
+        std::cout << "spC  " << &spC << ' ' << *spC << ' ' << spC.get() << ' ' << spC.use_count() << '\n';
+
+        weak_ptr<CtorWA> wpB = spC;
+        std::cout << "wpB  " << &wpB << ' ' << wpB.use_count() << '\n';
+        std::cout << "wpA  " << &wpA << ' ' << wpA.use_count() << '\n';
+
+        if (auto spwA = wpA.lock())
+        {
+            std::cout << "here\n";
+            std::cout << "spC  " << &spC << ' ' << *spC << ' ' << spC.get() << ' ' << spC.use_count() << '\n';
+            std::cout << "spwA  " << &spwA << ' ' << *spwA << ' ' << spwA.get() << ' ' << spwA.use_count() << '\n';
+        }
+        std::cout << "wpA  " << &wpA << ' ' << wpA.use_count() << '\n';
+
+        if (auto spwB = wpB.lock())
+        {
+            std::cout << "spC  " << &spC << ' ' << *spC << ' ' << spC.get() << ' ' << spC.use_count() << '\n';
+            std::cout << "spwB  " << &spwB << ' ' << *spwB << ' ' << spwB.get() << ' ' << spwB.use_count() << '\n';
+        }
+        std::cout << "wpB  " << &wpB << ' ' << wpB.use_count() << '\n';
+    }
     return 0;
 }
