@@ -14,6 +14,13 @@ cc_binary(
 )
 
 cc_binary(
+    name = "better_runtime_poly",
+    deps = ["//lib:others"],
+    srcs = ["better_runtime_poly.cpp"],
+    copts = COPTS,
+)
+
+cc_binary(
     name = "concurrency",
     deps = ["//lib:utility", "//lib:concurrency"],
     srcs = ["concurrency.cpp"],

@@ -39,6 +39,15 @@ cc_library(
 )
 
 cc_library(
+    name = "others",
+    hdrs = glob(["others/*.hpp"]),
+    includes = ["include"],
+    strip_include_prefix = "others",
+    visibility = ["//main:__pkg__"],
+    copts = COPTS,
+)
+
+cc_library(
     name = "utility",
     hdrs = glob(["utility/*.hpp"]),
     includes = ["include"],

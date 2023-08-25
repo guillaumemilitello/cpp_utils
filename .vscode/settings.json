@@ -66,6 +66,7 @@
         "stop_token": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "coroutine": "cpp"
+        "coroutine": "cpp",
+        "future": "cpp"
     }
 }
