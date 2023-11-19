@@ -10,7 +10,7 @@ class AvlSet : public Tree<T>
 public:
     void push(const T& data_)
     {
-        push_from(data_, this->_avlRoot, From::ROOT);
+        push_from(data_, _avlRoot, From::ROOT);
         Tree<T>::_root = _avlRoot;
     }
 

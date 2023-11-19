@@ -78,7 +78,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os_, const Tree<T_>& s_);
 
 private:
-    bool contains(const T& data_, Elem* const & root_) const
+    bool contains(const T& data_, Elem* const root_) const
     {
         if (root_ == nullptr)
         {
@@ -278,7 +278,7 @@ private:
         }
 
         std::queue<Elem*> q;
-	    q.emplace(root_);
+        q.emplace(root_);
 
         std::vector<std::string> res_v;
 
