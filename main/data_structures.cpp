@@ -10,5 +10,19 @@
 
 int main(int argc, char *argv[])
 {
+    AvlSet<int> set;
+    set.push(4);
+    set.push(6);
+    set.push(7);
+    set.push(2);
+    set.push(8);
+    std::cout << set.to_tree_string() << std::endl;
+
+    set.push(10);
+    std::cout << set.to_tree_string() << std::endl;
+
+    set.push(9);
+    std::cout << set.to_tree_string() << std::endl;
+
     return 0;
 }

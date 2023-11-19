@@ -11,21 +11,13 @@ class Tree
 protected:
     struct Elem
     {
-        Elem(const T& data_) : data(data_) {}
-
-        Elem* left = nullptr;
-        Elem* right = nullptr;
-        T data;
+        virtual const T& data() const = 0;
+        virtual Elem* const left() const = 0;
+        virtual Elem* const right() const = 0;
+        virtual ~Elem() {}
     };
 
     Elem* _root = nullptr;
-
-    enum class From
-    {
-        LEFT,
-        RIGHT,
-        ROOT
-    };
 
 public:
     virtual ~Tree()
@@ -94,22 +86,22 @@ private:
         }
         else
         {
-            if (data_ == root_->data)
+            if (data_ == root_->data())
             {
                 return true;
             }
-            else if (data_ < root_->data)
+            else if (data_ < root_->data())
             {
-                return contains(data_, root_->left);
+                return contains(data_, root_->left());
             }
             else
             {
-                return contains(data_, root_->right);
+                return contains(data_, root_->right());
             }
         }
     }
 
-    void clear(Elem*& root_)
+    void clear(Elem* root_)
     {
         if (root_ == nullptr)
         {
@@ -117,8 +109,8 @@ private:
         }
         else
         {
-            clear(root_->left);
-            clear(root_->right);
+            clear(root_->left());
+            clear(root_->right());
             delete root_;
         }
     }
@@ -133,34 +125,38 @@ private:
         return res;
     }
 
-    static std::string to_string_with_padding(const T& v_)
+    static std::string get_string_with_padding(std::string s)
     {
-        std::string res {std::to_string(v_)};
         constexpr unsigned PADDING_SIZE {1};
         for (unsigned i=0; i < PADDING_SIZE; ++i)
         {
-            res.insert(0, " ");
-            res.append(" ");
+            s.insert(0, " ");
+            s.append(" ");
         }
-        return res;
+        return s;
     }
 
-    static std::vector<std::string> to_tree_string(const Elem* const & root_, size_t depth_)
+    static std::string to_string_with_padding(const T& v_)
+    {
+        return get_string_with_padding(std::to_string(v_));
+    }
+
+    static std::vector<std::string> to_tree_string(const Elem* const root_, size_t depth_)
     {
         if (root_ == nullptr)
         {
-            return std::vector<std::string>{};
+            return std::vector<std::string>{get_string_with_padding("-")};
         }
 
-        const std::string str_data {to_string_with_padding(root_->data)};
+        const std::string str_data {to_string_with_padding(root_->data())};
 
-        if (root_->left == nullptr && root_->right == nullptr)
+        if (root_->left() == nullptr && root_->right() == nullptr)
         {
             return std::vector<std::string> {str_data};
         }
 
-        std::vector<std::string> l_str_v {to_tree_string(root_->left,  depth_ + 1)};
-        std::vector<std::string> r_str_v {to_tree_string(root_->right, depth_ + 1)};
+        std::vector<std::string> l_str_v {to_tree_string(root_->left(),  depth_ + 1)};
+        std::vector<std::string> r_str_v {to_tree_string(root_->right(), depth_ + 1)};
 
         std::vector<std::string> res_v(std::max(l_str_v.size(), r_str_v.size()) + 1);
 
@@ -173,7 +169,7 @@ private:
             ++str_l;
             for(;str_l < l_str_v[0].length(); ++str_l)
             {
-                l_str_v[0][str_l] = '_';
+                l_str_v[0][str_l] = '-';
             }
         }
         res_v[0] += str_data;
@@ -186,7 +182,7 @@ private:
             --str_f;
             for(;str_f >= 0; --str_f)
             {
-                r_str_v[0][str_f] = '_';
+                r_str_v[0][str_f] = '-';
             }
         }
 
@@ -203,7 +199,7 @@ private:
             }
         }
 
-        res_v[1] += get_space(str_data.length(), '_');
+        res_v[1] += get_space(str_data.length(), '-');
 
         for(unsigned i=2; i<res_v.size(); ++i)
         {
@@ -226,55 +222,55 @@ private:
         return res_v;
     }
 
-    static std::string to_string(Elem* const & root_)
+    static std::string to_string(Elem* const root_)
     {
         if (root_ == nullptr)
         {
             return std::string{};
         }
 
-        return std::to_string(root_->data) + " " +
-               to_string(root_->left) +
-               to_string(root_->right);
+        return std::to_string(root_->data()) + " " +
+               to_string(root_->left()) +
+               to_string(root_->right());
     }
 
-    static std::string to_string_inorder(Elem* const & root_)
+    static std::string to_string_inorder(Elem* const root_)
     {
         if (root_ == nullptr)
         {
             return std::string{};
         }
 
-        return to_string_inorder(root_->left) +
-               std::to_string(root_->data) + " " +
-               to_string_inorder(root_->right);
+        return to_string_inorder(root_->left()) +
+               std::to_string(root_->data()) + " " +
+               to_string_inorder(root_->right());
     }
 
-    static std::string to_string_preorder(Elem* const & root_)
+    static std::string to_string_preorder(Elem* const root_)
     {
         if (root_ == nullptr)
         {
             return std::string{};
         }
 
-        return std::to_string(root_->data) + " " +
-               to_string_inorder(root_->left) +
-               to_string_inorder(root_->right);
+        return std::to_string(root_->data()) + " " +
+               to_string_inorder(root_->left()) +
+               to_string_inorder(root_->right());
     }
 
-    static std::string to_string_postorder(Elem* const & root_)
+    static std::string to_string_postorder(Elem* const root_)
     {
         if (root_ == nullptr)
         {
             return std::string{};
         }
 
-        return to_string_inorder(root_->left) +
-               to_string_inorder(root_->right) +
-               std::to_string(root_->data) + " ";
+        return to_string_inorder(root_->left()) +
+               to_string_inorder(root_->right()) +
+               std::to_string(root_->data()) + " ";
     }
 
-    static std::vector<std::string> to_string_levelorder(Elem* const & root_)
+    static std::vector<std::string> to_string_levelorder(Elem* const root_)
     {
         if (root_ == nullptr)
         {
@@ -290,16 +286,16 @@ private:
         {
             Elem* const root = q.front();
             q.pop();
-            res_v.emplace_back(std::to_string(root->data));
+            res_v.emplace_back(std::to_string(root->data()));
 
-            if (root->left != nullptr)
+            if (root->left() != nullptr)
             {
-                q.emplace(root->left);
+                q.emplace(root->left());
             }
 
-            if (root->right != nullptr)
+            if (root->right() != nullptr)
             {
-                q.emplace(root->right);
+                q.emplace(root->right());
             }
         }
 
