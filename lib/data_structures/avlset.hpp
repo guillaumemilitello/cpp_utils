@@ -19,7 +19,6 @@ private:
 
     struct AvlElem : Elem
     {
-
         AvlElem(const T& data_) : _data(data_) {}
 
         const T& data() const override { return _data; }
@@ -27,7 +26,7 @@ private:
         Elem* const right() const override { return _right; }
 
         T _data;
-        int _height = 1; // For AVL tree
+        int _height = 1;
         AvlElem* _left = nullptr;
         AvlElem* _right = nullptr;
 
@@ -65,21 +64,23 @@ private:
         else if (data_ < root_->_data)
         {
             push_from(data_, root_->_left, From::LEFT);
-            balance(root_);
+            root_->_height = 1 + std::max(height(root_->_left), height(root_->_right));
+            rebalance(root_);
         }
         else
         {
             push_from(data_, root_->_right, From::RIGHT);
-            balance(root_);
+            root_->_height = 1 + std::max(height(root_->_left), height(root_->_right));
+            rebalance(root_);
         }
     }
 
-    static void balance(AvlElem*& root_)
+    static void rebalance(AvlElem*& root_)
     {
-        int bal_factor {difference(root_)};
+        int bal_factor {balance(root_)};
         if (bal_factor > 1)
         {
-            if (difference(root_->_left) > 0)
+            if (balance(root_->_left) > 0)
             {
                 root_ = ll_rotation(root_);
             }
@@ -90,7 +91,7 @@ private:
         }
         else if (bal_factor < -1)
         {
-            if (difference(root_->_right) > 0)
+            if (balance(root_->_right) > 0)
             {
                 root_ = rl_rotation(root_);
             }
@@ -102,7 +103,16 @@ private:
         return;
     }
 
-    static int difference(AvlElem*& root_)
+    static int height(AvlElem*& root_)
+    {
+        if (root_ == nullptr)
+        {
+            return 0;
+        }
+        return root_->_height;
+    }
+
+    static int balance(AvlElem*& root_)
     {
         if (root_ == nullptr)
         {
@@ -119,7 +129,7 @@ private:
             return 0;
         }
 
-        return 1 + std::max(height(root_->_left), height(root_->_right));
+        return root_->_height;
     }
 
     static AvlElem* rr_rotation(AvlElem*& root_)
@@ -128,6 +138,8 @@ private:
         res = root_->_right;
         root_->_right = res->_left;
         res->_left = root_;
+        root_->_height = 1 + std::max(height(root_->_left), height(root_->_right));
+        res->_height = 1 + std::max(height(res->_left), height(res->_right));
         return res;
     }
 
@@ -137,6 +149,8 @@ private:
         res = root_->_left;
         root_->_left = res->_right;
         res->_right = root_;
+        root_->_height = 1 + std::max(height(root_->_left), height(root_->_right));
+        res->_height = 1 + std::max(height(res->_left), height(res->_right));
         return res;
     }
 
