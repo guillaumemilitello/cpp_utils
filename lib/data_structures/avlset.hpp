@@ -75,7 +75,7 @@ private:
         }
     }
 
-    static void rebalance(AvlElem*& root_)
+    void rebalance(AvlElem*& root_)
     {
         int bal_factor {balance(root_)};
         if (bal_factor > 1)
@@ -103,7 +103,7 @@ private:
         return;
     }
 
-    static int height(AvlElem*& root_)
+    int height(AvlElem*& root_)
     {
         if (root_ == nullptr)
         {
@@ -112,7 +112,7 @@ private:
         return root_->_height;
     }
 
-    static int balance(AvlElem*& root_)
+    int balance(AvlElem*& root_)
     {
         if (root_ == nullptr)
         {
@@ -122,7 +122,7 @@ private:
         return height(root_->_left) - height(root_->_right);
     }
 
-    static size_t height(const AvlElem* const & root_)
+    size_t height(const AvlElem* const & root_)
     {
         if (root_ == nullptr)
         {
@@ -132,7 +132,7 @@ private:
         return root_->_height;
     }
 
-    static AvlElem* rr_rotation(AvlElem*& root_)
+    AvlElem* rr_rotation(AvlElem*& root_)
     {
         AvlElem* res;
         res = root_->_right;
@@ -143,7 +143,7 @@ private:
         return res;
     }
 
-    static AvlElem* ll_rotation(AvlElem*& root_)
+    AvlElem* ll_rotation(AvlElem*& root_)
     {
         AvlElem* res;
         res = root_->_left;
@@ -154,7 +154,7 @@ private:
         return res;
     }
 
-    static AvlElem* lr_rotation(AvlElem*& root_)
+    AvlElem* lr_rotation(AvlElem*& root_)
     {
         AvlElem* res;
         res = root_->_left;
@@ -162,7 +162,7 @@ private:
         return ll_rotation(root_);
     }
 
-    static AvlElem* rl_rotation(AvlElem*& root_)
+    AvlElem* rl_rotation(AvlElem*& root_)
     {
         AvlElem* res;
         res = root_->_right;

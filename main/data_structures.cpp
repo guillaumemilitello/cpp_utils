@@ -1,5 +1,6 @@
 #include <iostream>
 #include <avlset.hpp>
+#include <redblackset.hpp>
 #include <graph.hpp>
 #include <hash.hpp>
 #include <queue.hpp>
@@ -10,19 +11,15 @@
 
 int main(int argc, char *argv[])
 {
-    AvlSet<int> set;
-    set.push(4);
-    set.push(6);
-    set.push(7);
-    set.push(2);
-    set.push(8);
-    std::cout << set.to_tree_string() << std::endl;
-
-    set.push(10);
-    std::cout << set.to_tree_string() << std::endl;
-
-    set.push(9);
-    std::cout << set.to_tree_string() << std::endl;
+    AvlSet<int> avlSet;
+    RedBlackSet<int> redBlackSet;
+    for (int i : std::vector<int>{4, 6, 7, 8, 2, 10, 1, 9, 2, 3, 12, -1, 14, 15})
+    {
+        avlSet.push(i);
+        redBlackSet.push(i);
+    }
+    std::cout << avlSet.to_tree_string() << std::endl;
+    std::cout << redBlackSet.to_tree_string() << std::endl;
 
     return 0;
 }
