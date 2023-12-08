@@ -1,6 +1,7 @@
 #include <iostream>
 #include <avlset.hpp>
 #include <redblackset.hpp>
+#include <maxheap.hpp>
 #include <graph.hpp>
 #include <hash.hpp>
 #include <queue.hpp>
@@ -20,6 +21,24 @@ int main(int argc, char *argv[])
     }
     std::cout << avlSet.to_tree_string() << std::endl;
     std::cout << redBlackSet.to_tree_string() << std::endl;
+
+
+    MaxHeap<int> maxHeap;
+    maxHeap.push(10);
+    maxHeap.push(30);
+    maxHeap.push(20);
+    maxHeap.push(15);
+    maxHeap.push(15);
+    maxHeap.push(15);
+    maxHeap.push(50);
+    maxHeap.push(40);
+
+    std::cout << "Heap size: " << maxHeap.size() << std::endl;
+    while (maxHeap.size() > 0)
+    {
+        std::cout << "Extracted max element: " << maxHeap.top() << std::endl;
+        maxHeap.pop();
+    }
 
     return 0;
 }
