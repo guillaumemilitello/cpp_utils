@@ -9,9 +9,13 @@
 #include <tree.hpp>
 #include <trie.hpp>
 #include <tuple_hash.hpp>
+#include <vector.hpp>
 
 int main(int argc, char *argv[])
 {
+    Vector<int> vect {1, 2, 3};
+    vect.reserve(6);
+
     AvlSet<int> avlSet;
     RedBlackSet<int> redBlackSet;
     for (int i : std::vector<int>{4, 6, 7, 8, 2, 10, 1, 9, 2, 3, 12, -1, 14, 15})
